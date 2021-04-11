@@ -15,7 +15,8 @@ public class Main {
         String dbName = Db.dbUrl + argsHandler.getName();
         JdbcDataSource db = new JdbcDataSource();
         db.setURL(dbName);
-        Scanner scanner = new Scanner(System.in);
+
+        
 
 
 
@@ -24,15 +25,6 @@ public class Main {
             Connection conn = DriverManager.getConnection(dbName);
             conn.setAutoCommit(true);
             Statement st = conn.createStatement();
-
-//            while (true) {
-//                String answer = scanner.nextLine();
-//                if ("0".equals(answer)) {
-//                    System.exit(9);
-//                } else {
-//                    break;
-//                }
-//            }
 
             st.executeUpdate("CREATE TABLE company (" +
                     "ID INT," +
