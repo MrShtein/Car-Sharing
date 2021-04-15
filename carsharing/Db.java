@@ -27,9 +27,17 @@ public class Db extends JdbcDataSource {
 
             st.executeUpdate(
                     "CREATE TABLE IF NOT EXISTS company (" +
-                            "ID INT PRIMARY KEY AUTO_INCREMENT," +
-                            "NAME VARCHAR UNIQUE NOT NULL )" +
+                            "id INT PRIMARY KEY AUTO_INCREMENT," +
+                            "name VARCHAR UNIQUE NOT NULL )" +
                             "");
+            st.executeUpdate(
+                "CREATE TABLE IF NOT EXISTS car (" +
+                        "id INT PRIMARY KEY AUTO_INCREMENT," +
+                        "name VARCHAR(50) UNIQUE NOT NULL," +
+                        "company_id INT NOT NULL," +
+                        "CONSTRAINT fk_company FOREIGN KEY (company_id)" +
+                        "REFERENCES COMPANY(id))"
+            );
 
             st.close();
             conn.close();
