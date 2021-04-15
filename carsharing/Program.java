@@ -1,6 +1,8 @@
 package carsharing;
 
+import java.sql.Array;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -60,7 +62,7 @@ public class Program {
 
             switch (companyMenuItem) {
                 case 1:
-                    printCompanyList(db);
+                    chooseCompany(db);
                     break;
                 case 2:
                     addNewCompany();
@@ -75,7 +77,7 @@ public class Program {
 
     }
 
-    public void printCompanyList(Db db) {
+    public ArrayList<Company> getCompanyList(Db db) {
         List<Company> companies = null;
         CompanyDaoImpl companyDao = new CompanyDaoImpl(db);
         try {
@@ -98,5 +100,54 @@ public class Program {
         CompanyDaoImpl companyDao = new CompanyDaoImpl(db);
         companyDao.addCompany(companyName);
         System.out.println("The company was created");
+    }
+
+    public void chooseCompany(Db db) {
+        boolean companyMenu = true;
+        ArrayList<Company> companies = getCompanyList(db);
+        if (companies.isEmpty()) {
+            System.out.println("The company list is empty!");
+        } else {
+            System.out.println("Choose a company:");
+            printCompanyList(companies);
+            int company_id = new Scanner(System.in).nextInt();
+
+            while (companyMenu) {
+                printCompanyMenu();
+                int companyMenuItem = new Scanner(System.in).nextInt();
+
+                switch (companyMenuItem) {
+                    case 1:
+                        showCarList(db, company_id);
+                        break;
+                    case 2:
+                        addNewCar(db, company_id);
+                        break;
+                    case 0:
+                        companyMenu = false;
+                        break;
+                    default:
+                        throw new IllegalArgumentException("Menu item is wrong");
+                }
+            }
+
+        }
+    }
+
+    public void printCompanyList(ArrayList<Company> companies) {
+        for (Company item : companies) {
+            System.out.printf("%d. %s\n", item.getId(), item.getName());
+        }
+    }
+
+    public void printCompanyMenu() {
+        System.out.println("'Company name' company:\n" +
+                "1. Car list\n" +
+                "2. Create a car\n" +
+                "0. Back");
+    }
+
+    public void showCarList() {
+
     }
 }
