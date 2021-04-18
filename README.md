@@ -1,4 +1,4 @@
-# -Encryption-Decryption
+# Car Sharing
 JetBrains Academy Study Project
 
 # About
